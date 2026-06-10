@@ -202,6 +202,121 @@
           max-height: 54vh;
         }
       }
+
+      @media (max-height: 520px) and (orientation: landscape) {
+        .page {
+          min-height: 100svh;
+          grid-template-rows: auto minmax(0, 1fr);
+        }
+
+        .header {
+          padding: 10px 16px 0;
+        }
+
+        .logo {
+          width: clamp(58px, 9vw, 82px);
+        }
+
+        .viewer {
+          width: min(100%, 980px);
+          grid-template-columns: minmax(0, 1fr) 82px;
+          align-items: center;
+          align-content: center;
+          gap: 18px;
+          padding: 4px 18px 14px;
+        }
+
+        .day-image {
+          width: 100%;
+          max-height: calc(100svh - 70px);
+        }
+
+        .controls {
+          width: 82px;
+          height: min(70svh, 260px);
+          margin: 0;
+          display: grid;
+          grid-template-rows: auto minmax(0, 1fr);
+          justify-items: center;
+          align-self: center;
+        }
+
+        .control-title {
+          margin: 0 0 8px;
+          font-size: 13px;
+          line-height: 1;
+          writing-mode: horizontal-tb;
+        }
+
+        .slider-wrap {
+          width: 82px;
+          height: 100%;
+          padding: 0;
+          display: grid;
+          grid-template-columns: 36px 32px;
+          align-items: center;
+          justify-content: center;
+          column-gap: 8px;
+        }
+
+        .day-slider {
+          width: 100%;
+          height: 100%;
+          writing-mode: vertical-lr;
+          direction: rtl;
+        }
+
+        .is-landscape .day-slider::-webkit-slider-runnable-track {
+          width: 8px;
+          height: 100%;
+          background: linear-gradient(
+            0deg,
+            var(--red) 0%,
+            var(--red) var(--progress),
+            var(--track) var(--progress),
+            var(--track) 100%
+          );
+        }
+
+        .is-landscape .day-slider::-moz-range-track {
+          width: 8px;
+          height: 100%;
+        }
+
+        .is-landscape .day-slider::-webkit-slider-thumb {
+          margin-top: 0;
+          margin-left: -8px;
+        }
+
+        .stops {
+          height: 100%;
+          margin-top: 0;
+          grid-template-columns: 1fr;
+          grid-template-rows: repeat(4, 1fr);
+          align-items: center;
+          font-size: 12px;
+        }
+
+        .stops::before {
+          top: 0;
+          bottom: 0;
+          left: -17px;
+          right: auto;
+          width: 8px;
+          height: 100%;
+          background:
+            radial-gradient(circle at 50% 0%, var(--red) 0 5px, transparent 5.5px),
+            radial-gradient(circle at 50% 33.333%, var(--red) 0 5px, transparent 5.5px),
+            radial-gradient(circle at 50% 66.666%, var(--red) 0 5px, transparent 5.5px),
+            radial-gradient(circle at 50% 100%, var(--red) 0 5px, transparent 5.5px);
+        }
+
+        .stop,
+        .stop:first-child,
+        .stop:last-child {
+          text-align: left;
+        }
+      }
     </style>
   </head>
   <body>
@@ -250,6 +365,11 @@
       const slider = document.querySelector("#daySlider");
       const image = document.querySelector("#dayImage");
       const stops = Array.from(document.querySelectorAll(".stop"));
+      const landscapeQuery = window.matchMedia("(max-height: 520px) and (orientation: landscape)");
+
+      function updateOrientation() {
+        document.documentElement.classList.toggle("is-landscape", landscapeQuery.matches);
+      }
 
       function updateDay() {
         const selected = Number(slider.value);
@@ -266,6 +386,14 @@
       }
 
       slider.addEventListener("input", updateDay);
+
+      if (landscapeQuery.addEventListener) {
+        landscapeQuery.addEventListener("change", updateOrientation);
+      } else {
+        landscapeQuery.addListener(updateOrientation);
+      }
+
+      updateOrientation();
       updateDay();
     </script>
   </body>
