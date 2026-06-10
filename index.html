@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Watch & Cow Days</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --red: #c1292e;
+        --ink: #1e1e1c;
+        --muted: #74746d;
+        --page: #f7f7f3;
+        --track: #dddcd3;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        min-height: 100vh;
+        margin: 0;
+        background: var(--page);
+        color: var(--ink);
+        font-family: Montserrat, Arial, sans-serif;
+      }
+
+      .page {
+        min-height: 100vh;
+        display: grid;
+        grid-template-rows: auto 1fr;
+      }
+
+      .header {
+        padding: clamp(16px, 3vw, 32px);
+      }
+
+      .logo {
+        display: block;
+        width: clamp(82px, 12vw, 132px);
+        height: auto;
+      }
+
+      .viewer {
+        width: min(1120px, 100%);
+        margin: 0 auto;
+        padding: 0 clamp(18px, 4vw, 48px) clamp(32px, 5vw, 64px);
+        display: grid;
+        align-content: center;
+        gap: clamp(20px, 4vw, 36px);
+      }
+
+      .image-frame {
+        width: 100%;
+        display: grid;
+        place-items: center;
+      }
+
+      .day-image {
+        display: block;
+        width: min(100%, 980px);
+        max-height: min(62vh, 640px);
+        object-fit: contain;
+        border-radius: 8px;
+        box-shadow: 0 18px 48px rgba(30, 30, 28, 0.16);
+      }
+
+      .controls {
+        width: min(720px, 100%);
+        margin: 0 auto;
+      }
+
+      .control-title {
+        margin: 0 0 16px;
+        text-align: center;
+        font-size: clamp(18px, 2.4vw, 24px);
+        font-weight: 700;
+      }
+
+      .slider-wrap {
+        position: relative;
+        padding: 0 8px;
+      }
+
+      .day-slider {
+        width: 100%;
+        height: 36px;
+        margin: 0;
+        appearance: none;
+        background: transparent;
+        cursor: pointer;
+      }
+
+      .day-slider:focus-visible {
+        outline: 3px solid rgba(193, 41, 46, 0.28);
+        outline-offset: 6px;
+      }
+
+      .day-slider::-webkit-slider-runnable-track {
+        height: 8px;
+        border-radius: 999px;
+        background: linear-gradient(
+          90deg,
+          var(--red) 0%,
+          var(--red) var(--progress),
+          var(--track) var(--progress),
+          var(--track) 100%
+        );
+      }
+
+      .day-slider::-moz-range-track {
+        height: 8px;
+        border-radius: 999px;
+        background: var(--track);
+      }
+
+      .day-slider::-moz-range-progress {
+        height: 8px;
+        border-radius: 999px;
+        background: var(--red);
+      }
+
+      .day-slider::-webkit-slider-thumb {
+        width: 24px;
+        height: 24px;
+        margin-top: -8px;
+        appearance: none;
+        border: 3px solid #ffffff;
+        border-radius: 50%;
+        background: var(--red);
+        box-shadow: 0 3px 12px rgba(30, 30, 28, 0.25);
+      }
+
+      .day-slider::-moz-range-thumb {
+        width: 24px;
+        height: 24px;
+        border: 3px solid #ffffff;
+        border-radius: 50%;
+        background: var(--red);
+        box-shadow: 0 3px 12px rgba(30, 30, 28, 0.25);
+      }
+
+      .stops {
+        position: relative;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        margin-top: 8px;
+        font-family: Montserrat, Arial, sans-serif;
+        font-size: clamp(12px, 2vw, 15px);
+        font-weight: 600;
+        color: var(--muted);
+      }
+
+      .stops::before {
+        content: "";
+        position: absolute;
+        top: -21px;
+        left: 0;
+        right: 0;
+        height: 8px;
+        background:
+          radial-gradient(circle at 0% 50%, var(--red) 0 5px, transparent 5.5px),
+          radial-gradient(circle at 33.333% 50%, var(--red) 0 5px, transparent 5.5px),
+          radial-gradient(circle at 66.666% 50%, var(--red) 0 5px, transparent 5.5px),
+          radial-gradient(circle at 100% 50%, var(--red) 0 5px, transparent 5.5px);
+        pointer-events: none;
+      }
+
+      .stop {
+        min-width: 0;
+        text-align: center;
+        transition: color 160ms ease;
+      }
+
+      .stop:first-child {
+        text-align: left;
+      }
+
+      .stop:last-child {
+        text-align: right;
+      }
+
+      .stop.is-active {
+        color: var(--red);
+        font-weight: 700;
+      }
+
+      @media (max-width: 680px) {
+        .page {
+          grid-template-rows: auto minmax(0, 1fr);
+        }
+
+        .viewer {
+          align-content: start;
+          padding-top: 10px;
+        }
+
+        .day-image {
+          max-height: 54vh;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <header class="header">
+        <img class="logo" src="WATCH-COW-Logo.svg" alt="Watch Cow">
+      </header>
+
+      <section class="viewer" aria-label="Day image selector">
+        <div class="image-frame">
+          <img id="dayImage" class="day-image" src="images/5.jpg" alt="Watch Cow image for 5 days">
+        </div>
+
+        <div class="controls">
+          <h1 class="control-title">Days</h1>
+          <div class="slider-wrap">
+            <input
+              id="daySlider"
+              class="day-slider"
+              type="range"
+              min="0"
+              max="3"
+              step="1"
+              value="0"
+              aria-label="Select number of days"
+            >
+            <div class="stops" aria-hidden="true">
+              <span class="stop is-active">5</span>
+              <span class="stop">8</span>
+              <span class="stop">10</span>
+              <span class="stop">14</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const days = [
+        { label: "5", image: "images/5.jpg" },
+        { label: "8", image: "images/8.jpg" },
+        { label: "10", image: "images/10.jpg" },
+        { label: "14", image: "images/14.jpg" }
+      ];
+
+      const slider = document.querySelector("#daySlider");
+      const image = document.querySelector("#dayImage");
+      const stops = Array.from(document.querySelectorAll(".stop"));
+
+      function updateDay() {
+        const selected = Number(slider.value);
+        const day = days[selected];
+        const progress = `${(selected / (days.length - 1)) * 100}%`;
+
+        slider.style.setProperty("--progress", progress);
+        image.src = day.image;
+        image.alt = `Watch Cow image for ${day.label} days`;
+
+        stops.forEach((stop, index) => {
+          stop.classList.toggle("is-active", index === selected);
+        });
+      }
+
+      slider.addEventListener("input", updateDay);
+      updateDay();
+    </script>
+  </body>
+</html>
