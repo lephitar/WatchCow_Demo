@@ -6,7 +6,7 @@
     <title>Watch & Cow Days</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Playfair+Display:wght@600&display=swap" rel="stylesheet">
     <style>
       :root {
         --red: #c1292e;
@@ -36,12 +36,26 @@
 
       .header {
         padding: clamp(16px, 3vw, 32px);
+        display: flex;
+        align-items: center;
+        gap: clamp(12px, 2.5vw, 24px);
       }
 
       .logo {
         display: block;
         width: clamp(82px, 12vw, 132px);
         height: auto;
+        flex: 0 0 auto;
+      }
+
+      .tagline {
+        max-width: 680px;
+        margin: 0;
+        font-family: "Playfair Display", Georgia, serif;
+        font-size: clamp(18px, 3.4vw, 38px);
+        font-weight: 600;
+        line-height: 1.08;
+        min-width: 0;
       }
 
       .viewer {
@@ -202,6 +216,12 @@
           width: clamp(58px, 9vw, 82px);
         }
 
+        .tagline {
+          max-width: calc(100vw - 128px);
+          font-size: clamp(14px, 3.4vw, 20px);
+          line-height: 1.05;
+        }
+
         .viewer {
           width: min(100%, 980px);
           grid-template-columns: minmax(0, 1fr) 82px;
@@ -293,6 +313,7 @@
     <main class="page">
       <header class="header">
         <img class="logo" src="WATCH-COW-Logo.svg" alt="Watch Cow">
+        <p class="tagline">4 versions of the Grand Trans Alpina Tour of Switzerland</p>
       </header>
 
       <section class="viewer" aria-label="Day image selector">
