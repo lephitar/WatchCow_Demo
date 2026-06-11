@@ -74,6 +74,14 @@
       width: 100%;
       display: grid;
       place-items: center;
+      overflow: hidden;
+      touch-action: none;
+      cursor: grab;
+      border-radius: 8px;
+    }
+
+    .image-frame.is-dragging {
+      cursor: grabbing;
     }
 
     .day-image {
@@ -83,6 +91,10 @@
       object-fit: contain;
       border-radius: 8px;
       box-shadow: 0 18px 48px rgba(30, 30, 28, 0.16);
+      transform-origin: center center;
+      user-select: none;
+      -webkit-user-drag: none;
+      will-change: transform;
     }
 
     .controls {
@@ -367,7 +379,7 @@
 
     <section class="viewer" aria-label="Day image selector">
       <div class="image-frame">
-        <img id="dayImage" class="day-image" src="images/5.jpg" alt="Watch Cow image for 5 days">
+        <img id="dayImage" class="day-image" src="images/5.png" alt="Watch Cow image for 5 days">
       </div>
 
       <div class="controls">
@@ -398,13 +410,101 @@
     ];
 
     const slider = document.querySelector("#daySlider");
+    const imageFrame = document.querySelector(".image-frame");
     const image = document.querySelector("#dayImage");
     const tourLink = document.querySelector("#tourLink");
     const stops = Array.from(document.querySelectorAll(".stop"));
     const landscapeQuery = window.matchMedia("(max-height: 520px) and (orientation: landscape)");
+    const zoomState = {
+      scale: 1,
+      x: 0,
+      y: 0,
+      pointers: new Map(),
+      lastDragPoint: null,
+      lastPinchDistance: 0,
+      lastPinchCenter: null
+    };
+
+    function clamp(value, min, max) {
+      return Math.min(Math.max(value, min), max);
+    }
+
+    function applyImageTransform() {
+      image.style.transform = `translate3d(${zoomState.x}px, ${zoomState.y}px, 0) scale(${zoomState.scale})`;
+    }
+
+    function clampPan() {
+      if (zoomState.scale <= 1) {
+        zoomState.scale = 1;
+        zoomState.x = 0;
+        zoomState.y = 0;
+        applyImageTransform();
+        return;
+      }
+
+      applyImageTransform();
+
+      const frameRect = imageFrame.getBoundingClientRect();
+      const imageRect = image.getBoundingClientRect();
+      const frameCenterX = frameRect.left + frameRect.width / 2;
+      const frameCenterY = frameRect.top + frameRect.height / 2;
+      const imageCenterX = imageRect.left + imageRect.width / 2;
+      const imageCenterY = imageRect.top + imageRect.height / 2;
+
+      if (imageRect.width <= frameRect.width) {
+        zoomState.x += frameCenterX - imageCenterX;
+      } else if (imageRect.left > frameRect.left) {
+        zoomState.x += frameRect.left - imageRect.left;
+      } else if (imageRect.right < frameRect.right) {
+        zoomState.x += frameRect.right - imageRect.right;
+      }
+
+      if (imageRect.height <= frameRect.height) {
+        zoomState.y += frameCenterY - imageCenterY;
+      } else if (imageRect.top > frameRect.top) {
+        zoomState.y += frameRect.top - imageRect.top;
+      } else if (imageRect.bottom < frameRect.bottom) {
+        zoomState.y += frameRect.bottom - imageRect.bottom;
+      }
+
+      applyImageTransform();
+    }
+
+    function zoomAt(clientX, clientY, nextScale) {
+      const currentScale = zoomState.scale;
+      const scale = clamp(nextScale, 1, 4);
+
+      if (scale === currentScale) {
+        return;
+      }
+
+      const beforeRect = image.getBoundingClientRect();
+      const focusX = (clientX - beforeRect.left) / beforeRect.width;
+      const focusY = (clientY - beforeRect.top) / beforeRect.height;
+
+      zoomState.scale = scale;
+      applyImageTransform();
+
+      const afterRect = image.getBoundingClientRect();
+      zoomState.x += clientX - (afterRect.left + afterRect.width * focusX);
+      zoomState.y += clientY - (afterRect.top + afterRect.height * focusY);
+      clampPan();
+    }
+
+    function getDistance(first, second) {
+      return Math.hypot(first.clientX - second.clientX, first.clientY - second.clientY);
+    }
+
+    function getCenter(first, second) {
+      return {
+        x: (first.clientX + second.clientX) / 2,
+        y: (first.clientY + second.clientY) / 2
+      };
+    }
 
     function updateOrientation() {
       document.documentElement.classList.toggle("is-landscape", landscapeQuery.matches);
+      clampPan();
     }
 
     function updateDay() {
@@ -425,6 +525,85 @@
     }
 
     slider.addEventListener("input", updateDay);
+    imageFrame.addEventListener("wheel", (event) => {
+      event.preventDefault();
+      const zoomAmount = event.deltaY < 0 ? 1.12 : 0.88;
+      zoomAt(event.clientX, event.clientY, zoomState.scale * zoomAmount);
+    }, { passive: false });
+
+    imageFrame.addEventListener("pointerdown", (event) => {
+      imageFrame.setPointerCapture(event.pointerId);
+      imageFrame.classList.add("is-dragging");
+      zoomState.pointers.set(event.pointerId, event);
+
+      if (zoomState.pointers.size === 1) {
+        zoomState.lastDragPoint = { x: event.clientX, y: event.clientY };
+      }
+
+      if (zoomState.pointers.size === 2) {
+        const [first, second] = Array.from(zoomState.pointers.values());
+        zoomState.lastPinchDistance = getDistance(first, second);
+        zoomState.lastPinchCenter = getCenter(first, second);
+      }
+    });
+
+    imageFrame.addEventListener("pointermove", (event) => {
+      if (!zoomState.pointers.has(event.pointerId)) {
+        return;
+      }
+
+      zoomState.pointers.set(event.pointerId, event);
+
+      if (zoomState.pointers.size === 2) {
+        const [first, second] = Array.from(zoomState.pointers.values());
+        const distance = getDistance(first, second);
+        const center = getCenter(first, second);
+
+        if (zoomState.lastPinchDistance > 0 && zoomState.lastPinchCenter) {
+          zoomState.x += center.x - zoomState.lastPinchCenter.x;
+          zoomState.y += center.y - zoomState.lastPinchCenter.y;
+          zoomAt(center.x, center.y, zoomState.scale * (distance / zoomState.lastPinchDistance));
+        }
+
+        zoomState.lastPinchDistance = distance;
+        zoomState.lastPinchCenter = center;
+        return;
+      }
+
+      if (zoomState.scale > 1 && zoomState.lastDragPoint) {
+        zoomState.x += event.clientX - zoomState.lastDragPoint.x;
+        zoomState.y += event.clientY - zoomState.lastDragPoint.y;
+        zoomState.lastDragPoint = { x: event.clientX, y: event.clientY };
+        clampPan();
+      }
+    });
+
+    function endPointer(event) {
+      zoomState.pointers.delete(event.pointerId);
+
+      if (zoomState.pointers.size === 0) {
+        zoomState.lastDragPoint = null;
+        zoomState.lastPinchDistance = 0;
+        zoomState.lastPinchCenter = null;
+        imageFrame.classList.remove("is-dragging");
+        return;
+      }
+
+      if (zoomState.pointers.size === 1) {
+        const [remainingPointer] = Array.from(zoomState.pointers.values());
+        zoomState.lastDragPoint = {
+          x: remainingPointer.clientX,
+          y: remainingPointer.clientY
+        };
+        zoomState.lastPinchDistance = 0;
+        zoomState.lastPinchCenter = null;
+      }
+    }
+
+    imageFrame.addEventListener("pointerup", endPointer);
+    imageFrame.addEventListener("pointercancel", endPointer);
+    image.addEventListener("load", clampPan);
+    window.addEventListener("resize", clampPan);
 
     if (landscapeQuery.addEventListener) {
       landscapeQuery.addEventListener("change", updateOrientation);
