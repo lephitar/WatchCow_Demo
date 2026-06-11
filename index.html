@@ -376,10 +376,10 @@
   <script>
     // Replace each "#" below with the URL for that tour version.
     const days = [
-      { label: "5", image: "images/5.jpg", url: "https://pages.ezus.io/watch&cow/GrandTransAlpina5/index.html" },
-      { label: "8", image: "images/8.jpg", url: "https://pages.ezus.io/watch&cow/GrandTransAlpina8/index.html" },
-      { label: "10", image: "images/10.jpg", url: "https://pages.ezus.io/watch&cow/GrandTransAlpina10/index.html" },
-      { label: "14", image: "images/14.jpg", url: "https://pages.ezus.io/watch&cow/GrandTransAlpina14/index.html" }
+      { label: "5", image: "images/5.png", url: "https://pages.ezus.io/watch&cow/GrandTransAlpina5/index.html" },
+      { label: "8", image: "images/8.png", url: "https://pages.ezus.io/watch&cow/GrandTransAlpina8/index.html" },
+      { label: "10", image: "images/10.png", url: "https://pages.ezus.io/watch&cow/GrandTransAlpina10/index.html" },
+      { label: "14", image: "images/14.png", url: "https://pages.ezus.io/watch&cow/GrandTransAlpina14/index.html" }
     ];
 
     const slider = document.querySelector("#daySlider");
@@ -398,11 +398,11 @@
       const progress = `${(selected / (days.length - 1)) * 100}%`;
 
       slider.style.setProperty("--progress", progress);
-        image.src = day.image;
-        image.alt = `Watch Cow image for ${day.label} days`;
-        tourLink.href = day.url;
-        tourLink.textContent = `View ${day.label}-day tour`;
-        tourLink.setAttribute("aria-label", `View ${day.label} day tour`);
+      image.src = day.image;
+      image.alt = `Watch Cow image for ${day.label} days`;
+      tourLink.href = day.url;
+      tourLink.textContent = `View ${day.label}-day tour`;
+      tourLink.setAttribute("aria-label", `View ${day.label} day tour`);
 
       stops.forEach((stop, index) => {
         stop.classList.toggle("is-active", index === selected);
