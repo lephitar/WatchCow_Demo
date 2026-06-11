@@ -158,41 +158,41 @@
       box-shadow: 0 3px 12px rgba(30, 30, 28, 0.25);
     }
 
-      .stops {
-        position: relative;
-        width: calc(100% - 24px);
-        height: 18px;
-        margin: 8px 12px 0;
-        font-family: Montserrat, Arial, sans-serif;
-        font-size: clamp(12px, 2vw, 15px);
-        font-weight: 600;
-        color: var(--muted);
-      }
+    .stops {
+      position: relative;
+      width: calc(100% - 24px);
+      height: 18px;
+      margin: 8px 12px 0;
+      font-family: Montserrat, Arial, sans-serif;
+      font-size: clamp(12px, 2vw, 15px);
+      font-weight: 600;
+      color: var(--muted);
+    }
 
-      .stop {
-        position: absolute;
-        top: 0;
-        min-width: 2ch;
-        text-align: center;
-        transform: translateX(-50%);
-        transition: color 160ms ease;
-      }
+    .stop {
+      position: absolute;
+      top: 0;
+      min-width: 2ch;
+      text-align: center;
+      transform: translateX(-50%);
+      transition: color 160ms ease;
+    }
 
-      .stop:first-child {
-        left: 0;
-      }
+    .stop:first-child {
+      left: 0;
+    }
 
-      .stop:nth-child(2) {
-        left: 33.333%;
-      }
+    .stop:nth-child(2) {
+      left: 33.333%;
+    }
 
-      .stop:nth-child(3) {
-        left: 66.666%;
-      }
+    .stop:nth-child(3) {
+      left: 66.666%;
+    }
 
-      .stop:last-child {
-        left: 100%;
-      }
+    .stop:last-child {
+      left: 100%;
+    }
 
     .stop.is-active {
       color: var(--red);
@@ -286,7 +286,7 @@
       }
 
       .control-title {
-        margin: 0 0 8px;
+        margin: 0 0 0px;
         font-size: 13px;
         line-height: 1;
         writing-mode: horizontal-tb;
@@ -329,24 +329,24 @@
         margin-left: -8px;
       }
 
-        .stops {
-          display: grid;
-          width: auto;
-          height: 100%;
-          margin: 0;
-          grid-template-columns: 1fr;
-          grid-template-rows: repeat(4, 1fr);
-          align-items: center;
+      .stops {
+        display: grid;
+        width: auto;
+        height: 100%;
+        margin: 0;
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(4, 1fr);
+        align-items: center;
         font-size: 12px;
       }
 
-        .stop,
-        .stop:first-child,
-        .stop:last-child {
-          position: static;
-          transform: none;
-          text-align: left;
-        }
+      .stop,
+      .stop:first-child,
+      .stop:last-child {
+        position: static;
+        transform: none;
+        text-align: left;
+      }
 
       .tour-link {
         grid-column: 1 / -1;
