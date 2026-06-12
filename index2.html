@@ -19,9 +19,7 @@
       --track: #dddcd3;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
     body {
       min-height: 100vh;
@@ -72,46 +70,23 @@
 
     .image-frame {
       width: min(100%, 980px);
-      aspect-ratio: 3325 / 2227;
+      aspect-ratio: 797.96 / 534.38;
       max-height: min(62vh, 640px);
       margin: 0 auto;
-      display: grid;
-      place-items: center;
       overflow: hidden;
       touch-action: none;
       cursor: grab;
       border-radius: 8px;
-      background: #ffffff;
+      background: #fff;
     }
 
-    .image-frame.is-dragging {
-      cursor: grabbing;
-    }
+    .image-frame.is-dragging { cursor: grabbing; }
 
-    .map-stack {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      transform-origin: center center;
-      user-select: none;
-      will-change: transform;
-    }
-
-    .map-image,
-    .route-image {
+    /* Zoom works by changing viewBox — no CSS transform is ever applied */
+    #mapSvg {
       display: block;
       width: 100%;
       height: 100%;
-      object-fit: contain;
-      user-select: none;
-      -webkit-user-drag: none;
-    }
-
-    .route-image {
-      position: absolute;
-      inset: 0;
-      height: 100%;
-      pointer-events: none;
     }
 
     .controls {
@@ -149,10 +124,8 @@
       height: 8px;
       border-radius: 999px;
       background: linear-gradient(90deg,
-          var(--red) 0%,
-          var(--red) var(--progress),
-          var(--track) var(--progress),
-          var(--track) 100%);
+        var(--red) 0%, var(--red) var(--progress),
+        var(--track) var(--progress), var(--track) 100%);
     }
 
     .day-slider::-moz-range-track {
@@ -172,7 +145,7 @@
       height: 24px;
       margin-top: -8px;
       appearance: none;
-      border: 3px solid #ffffff;
+      border: 3px solid #fff;
       border-radius: 50%;
       background: var(--red);
       box-shadow: 0 3px 12px rgba(30, 30, 28, 0.25);
@@ -181,7 +154,7 @@
     .day-slider::-moz-range-thumb {
       width: 24px;
       height: 24px;
-      border: 3px solid #ffffff;
+      border: 3px solid #fff;
       border-radius: 50%;
       background: var(--red);
       box-shadow: 0 3px 12px rgba(30, 30, 28, 0.25);
@@ -207,26 +180,12 @@
       transition: color 160ms ease;
     }
 
-    .stop:first-child {
-      left: 0;
-    }
+    .stop:first-child  { left: 0; }
+    .stop:nth-child(2) { left: 33.333%; }
+    .stop:nth-child(3) { left: 66.666%; }
+    .stop:last-child   { left: 100%; }
 
-    .stop:nth-child(2) {
-      left: 33.333%;
-    }
-
-    .stop:nth-child(3) {
-      left: 66.666%;
-    }
-
-    .stop:last-child {
-      left: 100%;
-    }
-
-    .stop.is-active {
-      color: var(--red);
-      font-weight: 700;
-    }
+    .stop.is-active { color: var(--red); font-weight: 700; }
 
     .tour-link {
       justify-self: center;
@@ -237,7 +196,7 @@
       padding: 0 26px;
       border-radius: 999px;
       background: var(--red);
-      color: #ffffff;
+      color: #fff;
       font-size: 14px;
       font-weight: 700;
       text-decoration: none;
@@ -256,40 +215,19 @@
     }
 
     @media (max-width: 680px) {
-      .page {
-        grid-template-rows: auto minmax(0, 1fr);
-      }
-
-      .viewer {
-        align-content: start;
-        padding-top: 10px;
-      }
-
-      .map-stack {
-        max-height: 54vh;
-      }
+      .page { grid-template-rows: auto minmax(0, 1fr); }
+      .viewer { align-content: start; padding-top: 10px; }
     }
 
     @media (max-height: 520px) and (orientation: landscape) {
-      .page {
-        min-height: 100svh;
-        grid-template-rows: auto minmax(0, 1fr);
-      }
-
-      .header {
-        padding: 10px 16px 0;
-      }
-
-      .logo {
-        width: clamp(58px, 9vw, 82px);
-      }
-
+      .page { min-height: 100svh; grid-template-rows: auto minmax(0, 1fr); }
+      .header { padding: 10px 16px 0; }
+      .logo { width: clamp(58px, 9vw, 82px); }
       .tagline {
         max-width: calc(100vw - 128px);
         font-size: clamp(14px, 3.4vw, 20px);
         line-height: 1.05;
       }
-
       .viewer {
         width: min(100%, 980px);
         grid-template-columns: minmax(0, 1fr) 82px;
@@ -298,16 +236,7 @@
         gap: 18px;
         padding: 4px 18px 14px;
       }
-
-      .image-frame {
-        width: 100%;
-        max-height: calc(100svh - 70px);
-      }
-
-      .map-stack {
-        width: 100%;
-      }
-
+      .image-frame { width: 100%; max-height: calc(100svh - 70px); }
       .controls {
         width: 82px;
         height: min(70svh, 260px);
@@ -317,14 +246,7 @@
         justify-items: center;
         align-self: center;
       }
-
-      .control-title {
-        margin: 0 0 0px;
-        font-size: 13px;
-        line-height: 1;
-        writing-mode: horizontal-tb;
-      }
-
+      .control-title { margin: 0; font-size: 13px; line-height: 1; }
       .slider-wrap {
         width: 82px;
         height: 100%;
@@ -335,33 +257,15 @@
         justify-content: center;
         column-gap: 8px;
       }
-
-      .day-slider {
-        width: 100%;
-        height: 100%;
-        writing-mode: vertical-lr;
-      }
-
+      .day-slider { width: 100%; height: 100%; writing-mode: vertical-lr; }
       .is-landscape .day-slider::-webkit-slider-runnable-track {
-        width: 8px;
-        height: 100%;
+        width: 8px; height: 100%;
         background: linear-gradient(180deg,
-            var(--red) 0%,
-            var(--red) var(--progress),
-            var(--track) var(--progress),
-            var(--track) 100%);
+          var(--red) 0%, var(--red) var(--progress),
+          var(--track) var(--progress), var(--track) 100%);
       }
-
-      .is-landscape .day-slider::-moz-range-track {
-        width: 8px;
-        height: 100%;
-      }
-
-      .is-landscape .day-slider::-webkit-slider-thumb {
-        margin-top: 0;
-        margin-left: -8px;
-      }
-
+      .is-landscape .day-slider::-moz-range-track  { width: 8px; height: 100%; }
+      .is-landscape .day-slider::-webkit-slider-thumb { margin-top: 0; margin-left: -8px; }
       .stops {
         display: grid;
         width: auto;
@@ -372,21 +276,10 @@
         align-items: center;
         font-size: 12px;
       }
-
-      .stop,
-      .stop:first-child,
-      .stop:last-child {
-        position: static;
-        transform: none;
-        text-align: left;
+      .stop, .stop:first-child, .stop:last-child {
+        position: static; transform: none; text-align: left;
       }
-
-      .tour-link {
-        grid-column: 1 / -1;
-        min-height: 36px;
-        padding: 0 18px;
-        font-size: 12px;
-      }
+      .tour-link { grid-column: 1 / -1; min-height: 36px; padding: 0 18px; font-size: 12px; }
     }
   </style>
 </head>
@@ -400,17 +293,29 @@
 
     <section class="viewer" aria-label="Day image selector">
       <div class="image-frame">
-        <div id="mapStack" class="map-stack" aria-label="Watch Cow map for 5 days">
-          <img class="map-image" src="images2/map.jpg" alt="">
-          <img id="routeImage" class="route-image" src="images2/5.svg" alt="">
-        </div>
+        <!--
+          Single SVG element holds both layers.
+          Zoom = narrowing the viewBox; SVG vectors re-render at full quality.
+          No CSS transform is ever used for zoom.
+        -->
+        <svg id="mapSvg" viewBox="0 0 797.96 534.38"
+             preserveAspectRatio="xMidYMid meet"
+             xmlns="http://www.w3.org/2000/svg"
+             aria-label="Watch Cow map for 5 days">
+          <!-- JPEG fills the SVG coordinate space exactly (same aspect ratio) -->
+          <image id="mapImage" href="images2/map.jpg"
+                 x="0" y="0" width="797.96" height="534.38"
+                 preserveAspectRatio="none"/>
+          <!-- Route overlay appended here by loadRoute() -->
+        </svg>
       </div>
 
       <div class="controls">
         <h1 class="control-title">Days</h1>
         <div class="slider-wrap">
-          <input id="daySlider" class="day-slider" type="range" min="0" max="3" step="1" value="0"
-            aria-label="Select number of days">
+          <input id="daySlider" class="day-slider" type="range"
+                 min="0" max="3" step="1" value="0"
+                 aria-label="Select number of days">
           <div class="stops" aria-hidden="true">
             <span class="stop is-active">5</span>
             <span class="stop">8</span>
@@ -425,218 +330,182 @@
   </main>
 
   <script>
-    // Replace each "#" below with the URL for that tour version.
     const days = [
-      { label: "5", route: "images2/5.svg", url: "https://pages.ezus.io/watch&cow/GrandTransAlpina5/index.html" },
-      { label: "8", route: "images2/8.svg", url: "https://pages.ezus.io/watch&cow/GrandTransAlpina8/index.html" },
+      { label: "5",  route: "images2/5.svg",  url: "https://pages.ezus.io/watch&cow/GrandTransAlpina5/index.html"  },
+      { label: "8",  route: "images2/8.svg",  url: "https://pages.ezus.io/watch&cow/GrandTransAlpina8/index.html"  },
       { label: "10", route: "images2/10.svg", url: "https://pages.ezus.io/watch&cow/GrandTransAlpina10/index.html" },
       { label: "14", route: "images2/14.svg", url: "https://pages.ezus.io/watch&cow/GrandTransAlpina14/index.html" }
     ];
 
-    const slider = document.querySelector("#daySlider");
+    const MAP_W = 797.96, MAP_H = 534.38;
+
+    const svg        = document.getElementById("mapSvg");
+    const mapImage   = document.getElementById("mapImage");
     const imageFrame = document.querySelector(".image-frame");
-    const mapStack = document.querySelector("#mapStack");
-    const routeImage = document.querySelector("#routeImage");
-    const tourLink = document.querySelector("#tourLink");
-    const stops = Array.from(document.querySelectorAll(".stop"));
-    const landscapeQuery = window.matchMedia("(max-height: 520px) and (orientation: landscape)");
-    const zoomState = {
-      scale: 1,
-      x: 0,
-      y: 0,
-      pointers: new Map(),
-      lastDragPoint: null,
-      lastPinchDistance: 0,
-      lastPinchCenter: null
-    };
+    const slider     = document.getElementById("daySlider");
+    const tourLink   = document.getElementById("tourLink");
+    const stops      = Array.from(document.querySelectorAll(".stop"));
+    const landscape  = window.matchMedia("(max-height: 520px) and (orientation: landscape)");
 
-    function clamp(value, min, max) {
-      return Math.min(Math.max(value, min), max);
+    // ---------- viewBox zoom / pan ----------
+
+    const view = { scale: 1, panX: 0, panY: 0 };
+    const pointers = new Map();
+    let lastDrag = null, lastPinchDist = 0, lastPinchCenter = null;
+
+    function clamp(v, lo, hi) { return Math.min(Math.max(v, lo), hi); }
+
+    function applyViewBox() {
+      const w = MAP_W / view.scale, h = MAP_H / view.scale;
+      svg.setAttribute("viewBox", `${view.panX} ${view.panY} ${w} ${h}`);
     }
 
-    function applyImageTransform() {
-      mapStack.style.transform = `translate3d(${zoomState.x}px, ${zoomState.y}px, 0) scale(${zoomState.scale})`;
+    function clampAndApply() {
+      if (view.scale <= 1) {
+        view.scale = 1; view.panX = 0; view.panY = 0;
+      } else {
+        const w = MAP_W / view.scale, h = MAP_H / view.scale;
+        view.panX = clamp(view.panX, 0, MAP_W - w);
+        view.panY = clamp(view.panY, 0, MAP_H - h);
+      }
+      applyViewBox();
     }
 
-    function clampPan() {
-      if (zoomState.scale <= 1) {
-        zoomState.scale = 1;
-        zoomState.x = 0;
-        zoomState.y = 0;
-        applyImageTransform();
+    function toSVG(cx, cy) {
+      const pt = svg.createSVGPoint();
+      pt.x = cx; pt.y = cy;
+      return pt.matrixTransform(svg.getScreenCTM().inverse());
+    }
+
+    function zoomAt(cx, cy, nextScale) {
+      const s = clamp(nextScale, 1, 4);
+      if (s === view.scale) return;
+      const p  = toSVG(cx, cy);
+      const vW = MAP_W / view.scale, vH = MAP_H / view.scale;
+      const fx = (p.x - view.panX) / vW, fy = (p.y - view.panY) / vH;
+      view.scale = s;
+      view.panX  = p.x - fx * (MAP_W / s);
+      view.panY  = p.y - fy * (MAP_H / s);
+      clampAndApply();
+    }
+
+    function panBy(dx, dy) {
+      if (view.scale <= 1) return;
+      const r = svg.getBoundingClientRect();
+      view.panX -= dx * (MAP_W / view.scale) / r.width;
+      view.panY -= dy * (MAP_H / view.scale) / r.height;
+      clampAndApply();
+    }
+
+    function dist(a, b) { return Math.hypot(a.clientX - b.clientX, a.clientY - b.clientY); }
+    function mid(a, b)  { return { x: (a.clientX + b.clientX) / 2, y: (a.clientY + b.clientY) / 2 }; }
+
+    imageFrame.addEventListener("pointerdown", e => {
+      imageFrame.setPointerCapture(e.pointerId);
+      imageFrame.classList.add("is-dragging");
+      pointers.set(e.pointerId, e);
+      if (pointers.size === 1) lastDrag = { x: e.clientX, y: e.clientY };
+      if (pointers.size === 2) {
+        const [a, b] = [...pointers.values()];
+        lastPinchDist = dist(a, b); lastPinchCenter = mid(a, b);
+      }
+    });
+
+    imageFrame.addEventListener("pointermove", e => {
+      if (!pointers.has(e.pointerId)) return;
+      pointers.set(e.pointerId, e);
+      if (pointers.size === 2) {
+        const [a, b] = [...pointers.values()];
+        const d = dist(a, b), c = mid(a, b);
+        if (lastPinchDist > 0 && lastPinchCenter) {
+          panBy(c.x - lastPinchCenter.x, c.y - lastPinchCenter.y);
+          zoomAt(c.x, c.y, view.scale * (d / lastPinchDist));
+        }
+        lastPinchDist = d; lastPinchCenter = c;
         return;
       }
-
-      applyImageTransform();
-
-      const frameRect = imageFrame.getBoundingClientRect();
-      const imageRect = mapStack.getBoundingClientRect();
-      const frameCenterX = frameRect.left + frameRect.width / 2;
-      const frameCenterY = frameRect.top + frameRect.height / 2;
-      const imageCenterX = imageRect.left + imageRect.width / 2;
-      const imageCenterY = imageRect.top + imageRect.height / 2;
-
-      if (imageRect.width <= frameRect.width) {
-        zoomState.x += frameCenterX - imageCenterX;
-      } else if (imageRect.left > frameRect.left) {
-        zoomState.x += frameRect.left - imageRect.left;
-      } else if (imageRect.right < frameRect.right) {
-        zoomState.x += frameRect.right - imageRect.right;
+      if (lastDrag) {
+        panBy(e.clientX - lastDrag.x, e.clientY - lastDrag.y);
+        lastDrag = { x: e.clientX, y: e.clientY };
       }
+    });
 
-      if (imageRect.height <= frameRect.height) {
-        zoomState.y += frameCenterY - imageCenterY;
-      } else if (imageRect.top > frameRect.top) {
-        zoomState.y += frameRect.top - imageRect.top;
-      } else if (imageRect.bottom < frameRect.bottom) {
-        zoomState.y += frameRect.bottom - imageRect.bottom;
+    function endPointer(e) {
+      pointers.delete(e.pointerId);
+      if (pointers.size === 0) {
+        lastDrag = null; lastPinchDist = 0; lastPinchCenter = null;
+        imageFrame.classList.remove("is-dragging");
+      } else if (pointers.size === 1) {
+        const [r] = [...pointers.values()];
+        lastDrag = { x: r.clientX, y: r.clientY };
+        lastPinchDist = 0; lastPinchCenter = null;
       }
-
-      applyImageTransform();
     }
 
-    function zoomAt(clientX, clientY, nextScale) {
-      const currentScale = zoomState.scale;
-      const scale = clamp(nextScale, 1, 4);
+    imageFrame.addEventListener("pointerup",     endPointer);
+    imageFrame.addEventListener("pointercancel", endPointer);
 
-      if (scale === currentScale) {
-        return;
+    imageFrame.addEventListener("wheel", e => {
+      e.preventDefault();
+      zoomAt(e.clientX, e.clientY, view.scale * (e.deltaY < 0 ? 1.12 : 0.88));
+    }, { passive: false });
+
+    window.addEventListener("resize", clampAndApply);
+
+    function syncLandscape() {
+      document.documentElement.classList.toggle("is-landscape", landscape.matches);
+      clampAndApply();
+    }
+    landscape.addEventListener ? landscape.addEventListener("change", syncLandscape)
+                               : landscape.addListener(syncLandscape);
+
+    // ---------- route loading ----------
+
+    // Fetches an SVG file and appends its children directly to the root <svg>.
+    // Key: <defs> lands at SVG root level so its <style> cascades to all siblings.
+    // The C2PA metadata block is stripped before parsing (large, not needed).
+    async function loadRoute(url) {
+      // Remove previous route content, keep only the base map image
+      [...svg.children].forEach(c => { if (c !== mapImage) c.remove(); });
+
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        let text = await res.text();
+
+        // Strip C2PA certificate metadata — large and unnecessary for rendering
+        text = text.replace(/<metadata>[\s\S]*?<\/metadata>/, "");
+
+        const doc = new DOMParser().parseFromString(text, "image/svg+xml");
+        const src = doc.documentElement;
+        if (src.querySelector("parsererror")) throw new Error("SVG parse error");
+
+        // Append each child directly to the SVG root so <defs>/<style> cascades
+        for (const child of [...src.children]) {
+          if (child.tagName !== "metadata") {
+            svg.appendChild(document.importNode(child, true));
+          }
+        }
+      } catch (e) {
+        console.error("loadRoute failed:", url, e);
       }
-
-      const beforeRect = mapStack.getBoundingClientRect();
-      const focusX = (clientX - beforeRect.left) / beforeRect.width;
-      const focusY = (clientY - beforeRect.top) / beforeRect.height;
-
-      zoomState.scale = scale;
-      applyImageTransform();
-
-      const afterRect = mapStack.getBoundingClientRect();
-      zoomState.x += clientX - (afterRect.left + afterRect.width * focusX);
-      zoomState.y += clientY - (afterRect.top + afterRect.height * focusY);
-      clampPan();
     }
 
-    function getDistance(first, second) {
-      return Math.hypot(first.clientX - second.clientX, first.clientY - second.clientY);
-    }
-
-    function getCenter(first, second) {
-      return {
-        x: (first.clientX + second.clientX) / 2,
-        y: (first.clientY + second.clientY) / 2
-      };
-    }
-
-    function updateOrientation() {
-      document.documentElement.classList.toggle("is-landscape", landscapeQuery.matches);
-      clampPan();
-    }
+    // ---------- day selector ----------
 
     function updateDay() {
-      const selected = Number(slider.value);
-      const day = days[selected];
-      const progress = `${(selected / (days.length - 1)) * 100}%`;
-
-      slider.style.setProperty("--progress", progress);
-      routeImage.src = day.route;
-      mapStack.setAttribute("aria-label", `Watch Cow map for ${day.label} days`);
-      tourLink.href = day.url;
+      const i = Number(slider.value), day = days[i];
+      slider.style.setProperty("--progress", `${(i / (days.length - 1)) * 100}%`);
+      loadRoute(day.route);
+      svg.setAttribute("aria-label", `Watch Cow map for ${day.label} days`);
+      tourLink.href        = day.url;
       tourLink.textContent = `View ${day.label}-day tour`;
       tourLink.setAttribute("aria-label", `View ${day.label} day tour`);
-
-      stops.forEach((stop, index) => {
-        stop.classList.toggle("is-active", index === selected);
-      });
+      stops.forEach((s, j) => s.classList.toggle("is-active", j === i));
     }
 
     slider.addEventListener("input", updateDay);
-    imageFrame.addEventListener("wheel", (event) => {
-      event.preventDefault();
-      const zoomAmount = event.deltaY < 0 ? 1.12 : 0.88;
-      zoomAt(event.clientX, event.clientY, zoomState.scale * zoomAmount);
-    }, { passive: false });
-
-    imageFrame.addEventListener("pointerdown", (event) => {
-      imageFrame.setPointerCapture(event.pointerId);
-      imageFrame.classList.add("is-dragging");
-      zoomState.pointers.set(event.pointerId, event);
-
-      if (zoomState.pointers.size === 1) {
-        zoomState.lastDragPoint = { x: event.clientX, y: event.clientY };
-      }
-
-      if (zoomState.pointers.size === 2) {
-        const [first, second] = Array.from(zoomState.pointers.values());
-        zoomState.lastPinchDistance = getDistance(first, second);
-        zoomState.lastPinchCenter = getCenter(first, second);
-      }
-    });
-
-    imageFrame.addEventListener("pointermove", (event) => {
-      if (!zoomState.pointers.has(event.pointerId)) {
-        return;
-      }
-
-      zoomState.pointers.set(event.pointerId, event);
-
-      if (zoomState.pointers.size === 2) {
-        const [first, second] = Array.from(zoomState.pointers.values());
-        const distance = getDistance(first, second);
-        const center = getCenter(first, second);
-
-        if (zoomState.lastPinchDistance > 0 && zoomState.lastPinchCenter) {
-          zoomState.x += center.x - zoomState.lastPinchCenter.x;
-          zoomState.y += center.y - zoomState.lastPinchCenter.y;
-          zoomAt(center.x, center.y, zoomState.scale * (distance / zoomState.lastPinchDistance));
-        }
-
-        zoomState.lastPinchDistance = distance;
-        zoomState.lastPinchCenter = center;
-        return;
-      }
-
-      if (zoomState.scale > 1 && zoomState.lastDragPoint) {
-        zoomState.x += event.clientX - zoomState.lastDragPoint.x;
-        zoomState.y += event.clientY - zoomState.lastDragPoint.y;
-        zoomState.lastDragPoint = { x: event.clientX, y: event.clientY };
-        clampPan();
-      }
-    });
-
-    function endPointer(event) {
-      zoomState.pointers.delete(event.pointerId);
-
-      if (zoomState.pointers.size === 0) {
-        zoomState.lastDragPoint = null;
-        zoomState.lastPinchDistance = 0;
-        zoomState.lastPinchCenter = null;
-        imageFrame.classList.remove("is-dragging");
-        return;
-      }
-
-      if (zoomState.pointers.size === 1) {
-        const [remainingPointer] = Array.from(zoomState.pointers.values());
-        zoomState.lastDragPoint = {
-          x: remainingPointer.clientX,
-          y: remainingPointer.clientY
-        };
-        zoomState.lastPinchDistance = 0;
-        zoomState.lastPinchCenter = null;
-      }
-    }
-
-    imageFrame.addEventListener("pointerup", endPointer);
-    imageFrame.addEventListener("pointercancel", endPointer);
-    routeImage.addEventListener("load", clampPan);
-    window.addEventListener("resize", clampPan);
-
-    if (landscapeQuery.addEventListener) {
-      landscapeQuery.addEventListener("change", updateOrientation);
-    } else {
-      landscapeQuery.addListener(updateOrientation);
-    }
-
-    updateOrientation();
+    syncLandscape();
     updateDay();
   </script>
 </body>
