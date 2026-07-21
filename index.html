@@ -17,6 +17,8 @@
       --muted: #74746d;
       --page: #f7f7f3;
       --track: #dddcd3;
+      --primary-color: var(--red);
+      --text-color: var(--ink);
     }
 
     * {
@@ -34,7 +36,8 @@
     .page {
       min-height: 100vh;
       display: grid;
-      grid-template-rows: auto 1fr;
+      align-content: start;
+      grid-template-rows: auto auto;
     }
 
     .header {
@@ -223,7 +226,7 @@
 
     @media (max-width: 680px) {
       .page {
-        grid-template-rows: auto minmax(0, 1fr);
+        grid-template-rows: auto auto;
       }
 
       .viewer {
@@ -239,7 +242,7 @@
     @media (max-height: 520px) and (orientation: landscape) {
       .page {
         min-height: 100svh;
-        grid-template-rows: auto minmax(0, 1fr);
+        grid-template-rows: auto auto;
       }
 
       .header {
@@ -415,7 +418,7 @@
 <body>
   <main class="page">
     <header class="header">
-      <img class="logo" src="WATCH-COW-Logo.svg" alt="Watch Cow">
+      <img class="logo" src="WATCH-COW-Logo.svg" alt="Watch & Cow">
       <p class="tagline">Three Takes on the Grand Trans Alpina Tour</p>
     </header>
 
@@ -443,7 +446,7 @@
 
     <section class="about-section" id="about">
       <div class="about-logo">
-        <img src="WATCH-COW-Logo.svg" alt="Watch & Cow$$">
+        <img src="WATCH-COW-Logo.svg" alt="Watch & Cow">
 
       </div>
       <p>Luxury Crafted Trips in Switzerland</p>
