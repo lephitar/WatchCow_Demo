@@ -171,7 +171,8 @@
     }
 
     .stops {
-      position: relative;
+      display: flex;
+      justify-content: space-between;
       width: calc(100% - 24px);
       height: 18px;
       margin: 8px 12px 0;
@@ -182,24 +183,9 @@
     }
 
     .stop {
-      position: absolute;
-      top: 0;
       min-width: 2ch;
       text-align: center;
-      transform: translateX(-50%);
       transition: color 160ms ease;
-    }
-
-    .stop:first-child {
-      left: 0;
-    }
-
-    .stop:nth-child(2) {
-      left: 50%;
-    }
-
-    .stop:last-child {
-      left: 100%;
     }
 
     .stop.is-active {
@@ -342,21 +328,16 @@
       }
 
       .stops {
-        display: grid;
+        display: flex;
+        flex-direction: column;
         width: auto;
         height: 100%;
         margin: 0;
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(4, 1fr);
-        align-items: center;
+        align-items: flex-start;
         font-size: 12px;
       }
 
-      .stop,
-      .stop:first-child,
-      .stop:last-child {
-        position: static;
-        transform: none;
+      .stop {
         text-align: left;
       }
 
