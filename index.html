@@ -389,13 +389,13 @@
       <div class="controls">
         <h1 class="control-title">Days</h1>
         <div class="slider-wrap">
-          <input id="daySlider" class="day-slider" type="range" min="0" max="3" step="1" value="0"
+          <input id="daySlider" class="day-slider" type="range" min="0" max="2" step="1" value="0"
             aria-label="Select number of days">
           <div class="stops" aria-hidden="true">
             <span class="stop is-active">5</span>
             <span class="stop">8</span>
             <span class="stop">10</span>
-            <span class="stop">14</span>
+            <!-- <span class="stop">14</span> -->
           </div>
         </div>
       </div>
@@ -409,8 +409,8 @@
     const days = [
       { label: "5", image: "images/5.png", url: "https://pages.ezus.io/watch&cow/GrandTransAlpina_5/index.html" },
       { label: "8", image: "images/8.png", url: "https://pages.ezus.io/watch&cow/GrandTransAlpina_8/index.html" },
-      { label: "10", image: "images/10.png", url: "https://pages.ezus.io/watch&cow/GrandTransAlpina_10/index.html" },
-      { label: "14", image: "images/14.png", url: "https://pages.ezus.io/watch&cow/GrandTransAlpina_14/index.html" }
+      { label: "10", image: "images/10.png", url: "https://pages.ezus.io/watch&cow/GrandTransAlpina_10/index.html" }
+      // { label: "14", image: "images/14.png", url: "https://pages.ezus.io/watch&cow/GrandTransAlpina_14/index.html" }
     ];
 
     const slider = document.querySelector("#daySlider");
