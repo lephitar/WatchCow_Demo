@@ -44,6 +44,7 @@
       padding: clamp(16px, 3vw, 32px);
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: clamp(12px, 2.5vw, 24px);
     }
 
@@ -54,8 +55,22 @@
       flex: 0 0 auto;
     }
 
+    .header-text {
+      flex: 0 1 auto;
+      min-width: 0;
+    }
+
+    .presents {
+      margin: 0 0 0.2em;
+      font-family: Montserrat, Arial, sans-serif;
+      font-size: clamp(11px, 1.6vw, 16px);
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      opacity: 0.7;
+    }
+
     .tagline {
-      flex: 1 1 auto;
       margin: 0;
       font-family: "Playfair Display", Georgia, serif;
       font-size: clamp(18px, 3.4vw, 38px);
@@ -419,7 +434,10 @@
   <main class="page">
     <header class="header">
       <img class="logo" src="WATCH-COW-Logo.svg" alt="Watch & Cow">
-      <p class="tagline">Three Takes on the Grand Trans Alpina Tour</p>
+      <div class="header-text">
+        <p class="presents">Watch &amp; Cow presents</p>
+        <p class="tagline">Three Takes on the Grand Trans Alpina Tour</p>
+      </div>
     </header>
 
     <section class="viewer" aria-label="Day image selector">
